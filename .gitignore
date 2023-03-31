@@ -1,1 +1,25 @@
+int trigPin = 8; // khai báo chân Trigger của cảm biến siêu âm
+int echoPin = 7; // khai báo chân Echo của cảm biến siêu âm
 
+void setup() {
+  pinMode(trigPin, OUTPUT); // chân Trigger là đầu ra
+  pinMode(echoPin, INPUT); // chân Echo là đầu vào
+  Serial.begin(9600); // bắt đầu giao tiếp Serial với tốc độ 9600 baud
+}
+
+void loop() {
+  digitalWrite(trigPin, LOW); // tắt chân Trigger
+  delayMicroseconds(2); // chờ 2 micro giây
+  digitalWrite(trigPin, HIGH); // bật chân Trigger
+  delayMicroseconds(10); // chờ 10 micro giâya
+  digitalWrite(trigPin, LOW); // tắt chân Trigger
+
+  long duration = pulseIn(echoPin, HIGH); // đọc giá trị độ dài xung từ chân Echo
+  float distance = duration * 0.034 / 2; // tính khoảng cách dựa trên thời gian và vận tốc âm thanh trong không khí
+
+  Serial.print("Khoang cach: "); // in ra màn hình Serial Monitor
+  Serial.print(distance);
+  Serial.println(" cm");
+
+  delay(500); // chờ 0.5 giây trước khi đo tiếp
+}
